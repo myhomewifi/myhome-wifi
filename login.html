@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MyHome - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        .login-box {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 48px 40px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+        }
+        .login-box .icon-big {
+            text-align: center;
+            font-size: 3rem;
+            color: #1a73e8;
+            margin-bottom: 8px;
+        }
+        .login-box h2 {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #0d2b5a;
+            margin-bottom: 4px;
+        }
+        .login-box .sub {
+            text-align: center;
+            color: #5a7a9a;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+        .login-box .form-group {
+            margin-bottom: 16px;
+        }
+        .login-box .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2a4a6a;
+            margin-bottom: 4px;
+        }
+        .login-box .form-group label .required {
+            color: #e53935;
+        }
+        .login-box .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8fbff;
+            border: 2px solid #e3edfc;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            color: #0d2b5a;
+            font-family: monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .login-box .form-group input:focus {
+            outline: none;
+            border-color: #1a73e8;
+            background: #fff;
+        }
+        .login-box .form-group input::placeholder {
+            text-transform: none;
+            letter-spacing: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .login-box .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0d47a1, #1a73e8);
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 8px;
+        }
+        .login-box .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(26, 115, 232, 0.4);
+        }
+        .login-box .info-text {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #7a9abb;
+        }
+        .login-box .info-text i {
+            color: #1a73e8;
+        }
+        .login-box .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .login-box .divider .line {
+            flex: 1;
+            height: 1px;
+            background: #e3edfc;
+        }
+        .login-box .divider .text {
+            font-size: 0.8rem;
+            color: #7a9abb;
+        }
+        .login-box .link-akun {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #5a7a9a;
+        }
+        .login-box .link-akun a {
+            color: #1a73e8;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .login-box .link-akun a:hover {
+            text-decoration: underline;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            border: 1px solid #e53935;
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: #c62828;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: none;
+            text-align: center;
+        }
+        .alert-error.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hasil-login {
+            display: none;
+            background: #e8f5e9;
+            border: 1px solid #00a86b;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        .hasil-login.show {
+            display: block;
+        }
+        .hasil-login .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+        .hasil-login .row:last-child {
+            border-bottom: none;
+        }
+        .hasil-login .row .label {
+            color: #4a6a8a;
+        }
+        .hasil-login .row .value {
+            font-weight: 600;
+            color: #0d2b5a;
+        }
+        .hasil-login .row .value.kode {
+            font-family: monospace;
+            color: #0d47a1;
+        }
+        .hasil-login .status-badge {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .hasil-login .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .hasil-login .status-badge.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .hasil-login .btn-detail {
+            margin-top: 12px;
+            padding: 8px 24px;
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+        .hasil-login .btn-detail:hover {
+            background: #0d47a1;
+        }
+
+        @media (max-width: 600px) {
+            .login-box {
+                padding: 30px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <i class="fas fa-wifi icon-wifi"></i>
+            My<span>Home</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="paket.html">Paket</a></li>
+            <li><a href="jangkauan.html">Jangkauan</a></li>
+            <li><a href="akun.html">Akun</a></li>
+        </ul>
+        <div class="nav-right">
+            <div style="position:relative;">
+                <button class="menu-dots" onclick="toggleMenu()" aria-label="Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="paket.html"><i class="fas fa-tags"></i> Paket</a>
+                    <a href="jangkauan.html"><i class="fas fa-map-pin"></i> Cek Jangkauan</a>
+                    <a href="akun.html"><i class="fas fa-user-circle"></i> Akun Saya</a>
+                    <div class="menu-divider"></div>
+                    <a href="login.html" style="color:#1a73e8; font-weight:600;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="pesan.html" style="color:#0d47a1; font-weight:600;">
+                        <i class="fas fa-qrcode"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== LOGIN ===== -->
+<section class="login-page">
+    <div class="container">
+        <div class="login-box">
+            <div class="icon-big">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h2>Login</h2>
+            <p class="sub">Masukkan Kode Pelanggan untuk cek status pemasangan</p>
+
+            <div class="alert-error" id="alertError">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorMessage">Kode tidak ditemukan</span>
+            </div>
+
+            <form id="formLogin" onsubmit="return prosesLogin(event)">
+                <div class="form-group">
+                    <label>Kode Pelanggan <span class="required">*</span></label>
+                    <input type="text" id="loginKode" placeholder="Contoh: MYH-20260725-001" required>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-search"></i> Cek Status
+                </button>
+            </form>
+
+            <div class="divider">
+                <span class="line"></span>
+                <span class="text">atau</span>
+                <span class="line"></span>
+            </div>
+
+            <div class="link-akun">
+                <a href="akun.html"><i class="fas fa-user-circle"></i> Cek langsung di halaman Akun</a>
+            </div>
+
+            <div class="info-text">
+                <i class="fas fa-info-circle"></i> Kode pelanggan didapatkan setelah melakukan pemesanan
+            </div>
+
+            <div class="hasil-login" id="hasilLogin">
+                <div class="row">
+                    <span class="label">🔑 Kode Pelanggan</span>
+                    <span class="value kode" id="hKode">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">👤 Nama</span>
+                    <span class="value" id="hNama">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">📦 Paket</span>
+                    <span class="value" id="hPaket">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">📱 HP/WA</span>
+                    <span class="value" id="hHp">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">📍 Alamat</span>
+                    <span class="value" id="hAlamat">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">📅 Tanggal Pasang</span>
+                    <span class="value" id="hTanggal">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">🕐 Jam Pasang</span>
+                    <span class="value" id="hJam">-</span>
+                </div>
+                <div class="row">
+                    <span class="label">📌 Status</span>
+                    <span class="value"><span class="status-badge pending" id="hStatus">⏳ Menunggu</span></span>
+                </div>
+                <button class="btn-detail" onclick="window.location.href='akun.html'">
+                    <i class="fas fa-arrow-right"></i> Lihat Detail Lengkap
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-size:1.2rem; color:#0d47a1;">
+                    <i class="fas fa-wifi" style="color:#1a73e8;"></i> MyHome
+                </h4>
+                <p>Internet cepat dan stabil untuk rumah Anda. Bayar via QRIS, pasang dalam 1x24 jam.</p>
+            </div>
+            <div>
+                <h4>Paket</h4>
+                <ul>
+                    <li><a href="paket.html">50 Mbps - Rp100.000</a></li>
+                    <li><a href="paket.html">100 Mbps - Rp150.000</a></li>
+                    <li><a href="paket.html">200 Mbps - Rp200.000</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul>
+                    <li><i class="fab fa-whatsapp"></i> 0812-3456-7890</li>
+                    <li><i class="fas fa-envelope"></i> cs@myhome.id</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MyHome. All rights reserved.</span>
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('dropdownMenu').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const dots = document.querySelector('.menu-dots');
+        if (!dots.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+
+    function prosesLogin(e) {
+        e.preventDefault();
+
+        const kode = document.getElementById('loginKode').value.trim().toUpperCase();
+        const alertError = document.getElementById('alertError');
+        const errorMessage = document.getElementById('errorMessage');
+        const hasilLogin = document.getElementById('hasilLogin');
+
+        if (!kode) {
+            alertError.classList.add('show');
+            errorMessage.textContent = 'Silakan masukkan kode pelanggan!';
+            hasilLogin.classList.remove('show');
+            return false;
+        }
+
+        const pesanan = JSON.parse(localStorage.getItem('myhome_pesanan') || '[]');
+        const found = pesanan.find(p => p.kode === kode);
+
+        if (!found) {
+            alertError.classList.add('show');
+            errorMessage.textContent = 'Kode pelanggan "' + kode + '" tidak ditemukan!';
+            hasilLogin.classList.remove('show');
+            return false;
+        }
+
+        alertError.classList.remove('show');
+
+        document.getElementById('hKode').textContent = found.kode;
+        document.getElementById('hNama').textContent = found.nama;
+        document.getElementById('hPaket').textContent = found.paket + ' - Rp' + found.harga.toLocaleString('id-ID');
+        document.getElementById('hHp').textContent = found.hp;
+        document.getElementById('hAlamat').textContent = found.alamat + ', ' + found.kecamatan + ', ' + found.kota + ', ' + found.provinsi;
+        document.getElementById('hTanggal').textContent = found.tanggal;
+        document.getElementById('hJam').textContent = found.jam;
+
+        const statusEl = document.getElementById('hStatus');
+        if (found.status === 'confirmed') {
+            statusEl.textContent = '✅ Sudah Dikonfirmasi';
+            statusEl.className = 'status-badge confirmed';
+        } else {
+            statusEl.textContent = '⏳ Menunggu Konfirmasi';
+            statusEl.className = 'status-badge pending';
+        }
+
+        hasilLogin.classList.add('show');
+        hasilLogin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        return false;
+    }
+
+    document.getElementById('loginKode').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('formLogin').dispatchEvent(new Event('submit'));
+        }
+    });
+</script>
+
+</body>
+</html>

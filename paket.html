@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MyHome - Paket WiFi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-title {
+            text-align: center;
+            padding: 120px 0 20px;
+        }
+        .page-title h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0d2b5a;
+        }
+        .page-title p {
+            color: #5a7a9a;
+            font-size: 1.1rem;
+        }
+        .paket-page {
+            padding-bottom: 60px;
+        }
+        @media (max-width: 600px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <i class="fas fa-wifi icon-wifi"></i>
+            My<span>Home</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="paket.html" class="active">Paket</a></li>
+            <li><a href="jangkauan.html">Jangkauan</a></li>
+            <li><a href="akun.html">Akun</a></li>
+        </ul>
+        <div class="nav-right">
+            <div style="position:relative;">
+                <button class="menu-dots" onclick="toggleMenu()" aria-label="Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="paket.html"><i class="fas fa-tags"></i> Paket</a>
+                    <a href="jangkauan.html"><i class="fas fa-map-pin"></i> Cek Jangkauan</a>
+                    <a href="akun.html"><i class="fas fa-user-circle"></i> Akun Saya</a>
+                    <div class="menu-divider"></div>
+                    <a href="login.html" style="color:#1a73e8; font-weight:600;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="pesan.html" style="color:#0d47a1; font-weight:600;">
+                        <i class="fas fa-qrcode"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== PAKET ===== -->
+<section class="page-title">
+    <div class="container">
+        <span class="section-label">Pilih Paket</span>
+        <h1>Sesuaikan dengan <span class="gradient">Kebutuhan</span> Anda</h1>
+        <p>Semua paket sudah termasuk modem WiFi, kabel fiber, dan biaya instalasi.</p>
+    </div>
+</section>
+
+<section class="paket-page">
+    <div class="container">
+        <div class="paket-grid">
+            <!-- Paket 50 -->
+            <div class="paket-card">
+                <div class="speed">50 <small>Mbps</small></div>
+                <div class="price">Rp 100.000</div>
+                <div class="price-note">/ bulan pertama</div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Bebas FUP 150GB</li>
+                    <li><i class="fas fa-check-circle"></i> 1 STB TV</li>
+                    <li><i class="fas fa-check-circle"></i> WiFi 5 GHz</li>
+                    <li><i class="fas fa-check-circle"></i> Pasang 1x24 jam</li>
+                </ul>
+                <a href="pesan.html?paket=50" class="btn-qris" style="width:100%; justify-content:center;">
+                    <i class="fas fa-pen"></i> Isi Data & Pesan
+                </a>
+            </div>
+
+            <!-- Paket 100 -->
+            <div class="paket-card" style="border-color: rgba(26, 115, 232, 0.15);">
+                <div class="popular">⭐ Populer</div>
+                <div class="speed">100 <small>Mbps</small></div>
+                <div class="price">Rp 150.000</div>
+                <div class="price-note">/ bulan pertama</div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Bebas FUP 350GB</li>
+                    <li><i class="fas fa-check-circle"></i> 2 STB TV + Disney+</li>
+                    <li><i class="fas fa-check-circle"></i> WiFi 5 GHz + Mesh</li>
+                    <li><i class="fas fa-check-circle"></i> Pasang 1x24 jam</li>
+                </ul>
+                <a href="pesan.html?paket=100" class="btn-qris" style="width:100%; justify-content:center;">
+                    <i class="fas fa-pen"></i> Isi Data & Pesan
+                </a>
+            </div>
+
+            <!-- Paket 200 -->
+            <div class="paket-card">
+                <div class="speed">200 <small>Mbps</small></div>
+                <div class="price">Rp 200.000</div>
+                <div class="price-note">/ bulan pertama</div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Bebas FUP 600GB</li>
+                    <li><i class="fas fa-check-circle"></i> 3 STB TV + Netflix</li>
+                    <li><i class="fas fa-check-circle"></i> WiFi 6 + Mesh 2 unit</li>
+                    <li><i class="fas fa-check-circle"></i> Pasang 1x24 jam</li>
+                </ul>
+                <a href="pesan.html?paket=200" class="btn-qris" style="width:100%; justify-content:center;">
+                    <i class="fas fa-pen"></i> Isi Data & Pesan
+                </a>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:32px; color:#5a7a9a; font-size:0.9rem;">
+            <i class="fas fa-check-circle" style="color:#1a73e8;"></i>
+            Gratis biaya instalasi &nbsp;·&nbsp; Tidak ada kontrak &nbsp;·&nbsp; Garansi 7 hari
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-size:1.2rem; color:#0d47a1;">
+                    <i class="fas fa-wifi" style="color:#1a73e8;"></i> MyHome
+                </h4>
+                <p>Internet cepat dan stabil untuk rumah Anda. Bayar via QRIS, pasang dalam 1x24 jam.</p>
+            </div>
+            <div>
+                <h4>Paket</h4>
+                <ul>
+                    <li><a href="paket.html">50 Mbps - Rp100.000</a></li>
+                    <li><a href="paket.html">100 Mbps - Rp150.000</a></li>
+                    <li><a href="paket.html">200 Mbps - Rp200.000</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul>
+                    <li><i class="fab fa-whatsapp"></i> 0812-3456-7890</li>
+                    <li><i class="fas fa-envelope"></i> cs@myhome.id</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MyHome. All rights reserved.</span>
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('dropdownMenu').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const dots = document.querySelector('.menu-dots');
+        if (!dots.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>

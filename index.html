@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MyHome - Internet Cepat & Stabil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <i class="fas fa-wifi icon-wifi"></i>
+            My<span>Home</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Beranda</a></li>
+            <li><a href="paket.html">Paket</a></li>
+            <li><a href="jangkauan.html">Jangkauan</a></li>
+            <li><a href="akun.html">Akun</a></li>
+        </ul>
+        <div class="nav-right">
+            <div style="position:relative;">
+                <button class="menu-dots" onclick="toggleMenu()" aria-label="Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="paket.html"><i class="fas fa-tags"></i> Paket</a>
+                    <a href="jangkauan.html"><i class="fas fa-map-pin"></i> Cek Jangkauan</a>
+                    <a href="akun.html"><i class="fas fa-user-circle"></i> Akun Saya</a>
+                    <div class="menu-divider"></div>
+                    <a href="login.html" style="color:#1a73e8; font-weight:600;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="pesan.html" style="color:#0d47a1; font-weight:600;">
+                        <i class="fas fa-qrcode"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <div class="badge">
+                <i class="fas fa-bolt"></i> Internet Cepat & Stabil
+            </div>
+            <h1>
+                WiFi Rumah <br/>
+                <span class="gradient">Tanpa Ribet,</span><br/>
+                Bayar via QRIS
+            </h1>
+            <p class="subtitle">
+                MyHome hadir untuk memudahkan akses internet di rumah Anda.
+                Cukup scan QRIS, kami pasang dalam 1x24 jam. Tersedia di <strong>seluruh Indonesia</strong>.
+            </p>
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <a href="paket.html" class="btn-primary">
+                    <i class="fas fa-qrcode"></i> Lihat Paket
+                </a>
+                <a href="jangkauan.html" class="btn-outline">
+                    <i class="fas fa-map-pin"></i> Cek Jangkauan
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>500+</h3>
+                    <p>Pelanggan Aktif</p>
+                </div>
+                <div class="stat">
+                    <h3>1x24</h3>
+                    <p>Jam Pemasangan</p>
+                </div>
+                <div class="stat">
+                    <h3>100%</h3>
+                    <p>Garansi Puas</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img 
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e3edfc'/%3E%3Ccircle cx='200' cy='180' r='100' fill='%23b3d0f0' opacity='0.5'/%3E%3Ccircle cx='200' cy='180' r='70' fill='%23d4e4fc'/%3E%3Crect x='155' y='90' width='90' height='90' rx='12' fill='%230d47a1' opacity='0.15'/%3E%3Crect x='165' y='100' width='70' height='40' rx='6' fill='%231a73e8' opacity='0.2'/%3E%3Crect x='165' y='148' width='70' height='8' rx='4' fill='%231a73e8' opacity='0.12'/%3E%3Crect x='165' y='162' width='50' height='8' rx='4' fill='%231a73e8' opacity='0.08'/%3E%3Ccircle cx='200' cy='240' r='30' fill='%23f0f6ff' stroke='%231a73e8' stroke-width='2'/%3E%3Cpath d='M180 245 Q200 225 220 245' stroke='%231a73e8' stroke-width='3' fill='none'/%3E%3Cpath d='M185 255 Q200 240 215 255' stroke='%231a73e8' stroke-width='2' fill='none' opacity='0.6'/%3E%3Ctext x='200' y='320' text-anchor='middle' fill='%231a73e8' font-size='20' font-weight='700'%3E📱%3C/text%3E%3C/svg%3E"
+                alt="Wanita menggunakan HP dengan headset"
+            />
+        </div>
+    </div>
+</section>
+
+<!-- ===== MANFAAT ===== -->
+<section>
+    <div class="container">
+        <div class="text-center">
+            <span class="section-label">Kenapa MyHome</span>
+            <h2 class="section-title">
+                Internet <span class="gradient">Cepat</span> untuk <br/>Semua Kebutuhan
+            </h2>
+            <p class="section-desc mx-auto">
+                Nikmati koneksi internet yang andal untuk bekerja, belajar, dan hiburan
+                keluarga. Semua dengan satu pembayaran QRIS yang mudah.
+            </p>
+        </div>
+        <div class="benefit-grid">
+            <div class="benefit-card">
+                <div class="icon"><i class="fas fa-bolt"></i></div>
+                <h4>Kecepatan Tinggi</h4>
+                <p>Pilih kecepatan 50, 100, atau 200 Mbps sesuai kebutuhan.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon"><i class="fas fa-qrcode"></i></div>
+                <h4>Bayar Pakai QRIS</h4>
+                <p>Cukup scan QRIS dari aplikasi bank atau e-wallet favorit Anda.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon"><i class="fas fa-clock"></i></div>
+                <h4>Pasang 1x24 Jam</h4>
+                <p>Setelah pembayaran terverifikasi, tim teknis langsung datang.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <h4>Aman & Terpercaya</h4>
+                <p>Jaringan aman dengan enkripsi terbaik. Data Anda terlindungi.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+    <div class="container">
+        <div class="text-center">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">
+                Pertanyaan <span class="gradient">Umum</span>
+            </h2>
+            <p class="section-desc mx-auto">
+                Jawaban atas pertanyaan yang sering diajukan tentang MyHome.
+            </p>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h4><i class="fas fa-qrcode"></i> Bagaimana cara bayar?</h4>
+                <p>Kami hanya menerima pembayaran via QRIS. Scan QRIS dari aplikasi bank atau e-wallet Anda.</p>
+            </div>
+            <div class="faq-item">
+                <h4><i class="fas fa-clock"></i> Berapa lama proses pemasangan?</h4>
+                <p>Setelah pembayaran terverifikasi, tim kami akan pasang dalam 1x24 jam.</p>
+            </div>
+            <div class="faq-item">
+                <h4><i class="fas fa-money-bill"></i> Apakah ada biaya tambahan?</h4>
+                <p>Tidak ada. Harga yang tertera sudah termasuk modem, kabel, dan biaya instalasi.</p>
+            </div>
+            <div class="faq-item">
+                <h4><i class="fas fa-sync"></i> Bisa ganti paket?</h4>
+                <p>Bisa. Hubungi CS kami untuk upgrade atau downgrade paket di bulan berikutnya.</p>
+            </div>
+            <div class="faq-item">
+                <h4><i class="fas fa-shield-alt"></i> Apakah aman bayar via QRIS?</h4>
+                <p>Sangat aman. QRIS adalah standar pembayaran nasional yang terenkripsi.</p>
+            </div>
+            <div class="faq-item">
+                <h4><i class="fas fa-headset"></i> Ada layanan support?</h4>
+                <p>Ya, kami punya tim support 24/7 yang siap membantu Anda via WhatsApp.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section>
+    <div class="container">
+        <div class="cta-section">
+            <h2>Siap <span>Pasang WiFi</span> di Rumah?</h2>
+            <p>Pilih paket, scan QRIS, dan nikmati internet cepat dalam 1x24 jam.</p>
+            <a href="paket.html" class="btn-qris" style="padding:16px 48px; font-size:1.1rem;">
+                <i class="fas fa-qrcode"></i> Lihat Paket & Bayar
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-size:1.2rem; color:#0d47a1;">
+                    <i class="fas fa-wifi" style="color:#1a73e8;"></i> MyHome
+                </h4>
+                <p>Internet cepat dan stabil untuk rumah Anda. Bayar via QRIS, pasang dalam 1x24 jam.</p>
+            </div>
+            <div>
+                <h4>Paket</h4>
+                <ul>
+                    <li><a href="paket.html">50 Mbps - Rp100.000</a></li>
+                    <li><a href="paket.html">100 Mbps - Rp150.000</a></li>
+                    <li><a href="paket.html">200 Mbps - Rp200.000</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul>
+                    <li><i class="fab fa-whatsapp"></i> 0812-3456-7890</li>
+                    <li><i class="fas fa-envelope"></i> cs@myhome.id</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MyHome. All rights reserved.</span>
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('dropdownMenu').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const dots = document.querySelector('.menu-dots');
+        if (!dots.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>

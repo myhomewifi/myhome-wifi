@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MyHome - Cek Jangkauan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+    <style>
+        .page-title {
+            text-align: center;
+            padding: 120px 0 20px;
+        }
+        .page-title h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0d2b5a;
+        }
+        .page-title p {
+            color: #5a7a9a;
+            font-size: 1.1rem;
+        }
+        .jangkauan-page {
+            padding-bottom: 60px;
+        }
+        .jangkauan-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .jangkauan-box .icon-big {
+            font-size: 3.5rem;
+            color: #1a73e8;
+            margin-bottom: 12px;
+        }
+        .jangkauan-box .sub {
+            color: #5a7a9a;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .peta-indonesia {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 20px;
+            background: #f8fbff;
+            border-radius: 16px;
+            border: 1px solid rgba(26, 115, 232, 0.06);
+        }
+        .peta-indonesia svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .peta-indonesia .label-peta {
+            font-size: 0.8rem;
+            color: #7a9abb;
+            margin-top: 8px;
+        }
+
+        .form-cek-kota {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .form-cek-kota input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e3edfc;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: 0.3s;
+            background: #f8fbff;
+            color: #0d2b5a;
+        }
+        .form-cek-kota input:focus {
+            outline: none;
+            border-color: #1a73e8;
+            background: #ffffff;
+        }
+        .form-cek-kota button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .form-cek-kota button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+
+        .city-quick-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin: 12px 0 8px;
+        }
+        .city-quick-list .city-tag {
+            background: #f0f6ff;
+            border: 1px solid rgba(26, 115, 232, 0.08);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #0d2b5a;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .city-quick-list .city-tag:hover {
+            background: #e3edfc;
+            border-color: #1a73e8;
+        }
+
+        .hasil-cek {
+            display: none;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        .hasil-cek.show {
+            display: block;
+        }
+        .hasil-cek.sukses {
+            background: #e8f5e9;
+            border: 2px solid #00a86b;
+        }
+        .hasil-cek.error {
+            background: #ffebee;
+            border: 2px solid #e53935;
+        }
+        .hasil-cek .check-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+        .hasil-cek.sukses .check-icon {
+            color: #00a86b;
+        }
+        .hasil-cek.error .check-icon {
+            color: #e53935;
+        }
+        .hasil-cek h4 {
+            color: #0d2b5a;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .hasil-cek p {
+            color: #4a6a8a;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+        .hasil-cek .btn-success {
+            display: inline-flex;
+            text-decoration: none;
+        }
+        .hasil-cek .suggestions {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+        .hasil-cek .suggestions .label {
+            font-size: 0.8rem;
+            color: #5a7a9a;
+            margin-bottom: 6px;
+        }
+        .hasil-cek .suggestions .city-tag {
+            display: inline-block;
+            background: #f0f6ff;
+            border: 1px solid rgba(26, 115, 232, 0.08);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #0d2b5a;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            margin: 3px;
+        }
+        .hasil-cek .suggestions .city-tag:hover {
+            background: #e3edfc;
+            border-color: #1a73e8;
+        }
+
+        .note-jangkauan {
+            font-size: 0.85rem;
+            color: #5a7a9a;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8fbff;
+            border-radius: 12px;
+            border-left: 4px solid #1a73e8;
+            text-align: left;
+        }
+        .note-jangkauan i {
+            color: #1a73e8;
+            margin-right: 6px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            .jangkauan-box {
+                padding: 24px;
+            }
+            .form-cek-kota {
+                flex-direction: column;
+            }
+            .form-cek-kota button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <i class="fas fa-wifi icon-wifi"></i>
+            My<span>Home</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="paket.html">Paket</a></li>
+            <li><a href="jangkauan.html" class="active">Jangkauan</a></li>
+            <li><a href="akun.html">Akun</a></li>
+        </ul>
+        <div class="nav-right">
+            <div style="position:relative;">
+                <button class="menu-dots" onclick="toggleMenu()" aria-label="Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="paket.html"><i class="fas fa-tags"></i> Paket</a>
+                    <a href="jangkauan.html"><i class="fas fa-map-pin"></i> Cek Jangkauan</a>
+                    <a href="akun.html"><i class="fas fa-user-circle"></i> Akun Saya</a>
+                    <div class="menu-divider"></div>
+                    <a href="login.html" style="color:#1a73e8; font-weight:600;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="pesan.html" style="color:#0d47a1; font-weight:600;">
+                        <i class="fas fa-qrcode"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== CEK JANGKAUAN ===== -->
+<section class="page-title">
+    <div class="container">
+        <span class="section-label">Cek Jangkauan</span>
+        <h1>Apakah <span class="gradient">MyHome</span> Tersedia di Kotamu?</h1>
+        <p>Masukkan nama kota Anda untuk mengecek ketersediaan MyHome di wilayah Anda.</p>
+    </div>
+</section>
+
+<section class="jangkauan-page">
+    <div class="container">
+        <div class="jangkauan-box">
+            <div class="icon-big">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+
+            <!-- PETA INDONESIA OUTLINE -->
+            <div class="peta-indonesia">
+                <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M250,80 L280,65 L320,70 L340,55 L370,50 L400,45 L420,55 L440,50 L460,60 L480,55 L500,65 L520,60 L540,70 L560,65 L580,75 L600,70 L620,80 L640,75 L660,85 L680,90 L690,100 L700,110 L710,120 L720,130 L730,140 L740,150 L745,160 L750,170 L755,180 L760,190 L765,200 L770,210 L775,220 L780,230 L785,240 L790,250 L795,260 L800,270 L795,280 L790,290 L785,300 L780,310 L775,320 L770,330 L765,340 L760,350 L755,360 L750,370 L745,380 L740,390 L735,400 L730,410 L725,420 L720,430 L715,440 L710,450 L700,460 L690,470 L680,480 L670,490 L660,500 L650,510 L640,520 L630,530 L620,540 L610,550 L600,560 L590,570 L580,575 L570,580 L560,585 L550,590 L540,595 L530,600 L520,605 L510,610 L500,615 L490,620 L480,625 L470,630 L460,635 L450,640 L440,645 L430,650 L420,655 L410,660 L400,665 L390,670 L380,675 L370,680 L360,685 L350,690 L340,695 L330,700 L320,705 L310,710 L300,715 L290,720 L280,725 L270,730 L260,735 L250,740 L240,745 L230,750 L220,755 L210,760 L200,765 L190,770 L180,775 L170,780 L160,785 L150,790 L140,795 L130,800 L120,795 L110,790 L100,785 L90,780 L80,775 L70,770 L60,765 L50,760 L40,755 L35,750 L30,745 L25,740 L20,735 L15,730 L10,725 L5,720 L0,715 L5,710 L10,705 L15,700 L20,695 L25,690 L30,685 L35,680 L40,675 L45,670 L50,665 L55,660 L60,655 L65,650 L70,645 L75,640 L80,635 L85,630 L90,625 L95,620 L100,615 L105,610 L110,605 L115,600 L120,595 L125,590 L130,585 L135,580 L140,575 L145,570 L150,565 L155,560 L160,555 L165,550 L170,545 L175,540 L180,535 L185,530 L190,525 L195,520 L200,515 L205,510 L210,505 L215,500 L220,495 L225,490 L230,485 L235,480 L240,475 L245,470 L250,465 L255,460 L260,455 L265,450 L270,445 L275,440 L280,435 L285,430 L290,425 L295,420 L300,415 L305,410 L310,405 L315,400 L320,395 L325,390 L330,385 L335,380 L340,375 L345,370 L350,365 L355,360 L360,355 L365,350 L370,345 L375,340 L380,335 L385,330 L390,325 L395,320 L400,315 L405,310 L410,305 L415,300 L420,295 L425,290 L430,285 L435,280 L440,275 L445,270 L450,265 L455,260 L460,255 L465,250 L470,245 L475,240 L480,235 L485,230 L490,225 L495,220 L500,215 L505,210 L510,205 L515,200 L520,195 L525,190 L530,185 L535,180 L540,175 L545,170 L550,165 L555,160 L560,155 L565,150 L570,145 L575,140 L580,135 L585,130 L590,125 L595,120 L600,115 L605,110 L610,105 L615,100 L620,95 L625,90 L630,85 L635,80 L640,75 L645,70 L650,65 L655,60 L660,55 L665,50 L670,45 L675,40 L680,35 L685,30 L690,25 L695,20 L700,15 L705,10 L710,5 L715,0 L720,5 L725,10 L730,15 L735,20 L740,25 L745,30 L750,35 L755,40 L760,45 L765,50 L770,55 L775,60 L780,65 L785,70 L790,75 L795,80 L800,85 L795,90 L790,95 L785,100 L780,105 L775,110 L770,115 L765,120 L760,125 L755,130 L750,135 L745,140 L740,145 L735,150 L730,155 L725,160 L720,165 L715,170 L710,175 L705,180 L700,185 L695,190 L690,195 L685,200 L680,205 L675,210 L670,215 L665,220 L660,225 L655,230 L650,235 L645,240 L640,245 L635,250 L630,255 L625,260 L620,265 L615,270 L610,275 L605,280 L600,285 L595,290 L590,295 L585,300 L580,305 L575,310 L570,315 L565,320 L560,325 L555,330 L550,335 L545,340 L540,345 L535,350 L530,355 L525,360 L520,365 L515,370 L510,375 L505,380 L500,385 L495,390 L490,395 L485,400 L480,405 L475,410 L470,415 L465,420 L460,425 L455,430 L450,435 L445,440 L440,445 L435,450 L430,455 L425,460 L420,465 L415,470 L410,475 L405,480 L400,485 L395,490 L390,495 L385,500 L380,505 L375,510 L370,515 L365,520 L360,525 L355,530 L350,535 L345,540 L340,545 L335,550 L330,555 L325,560 L320,565 L315,570 L310,575 L305,580 L300,585 L295,590 L290,595 L285,600 L280,605 L275,610 L270,615 L265,620 L260,625 L255,630 L250,635 L245,640 L240,645 L235,650 L230,655 L225,660 L220,665 L215,670 L210,675 L205,680 L200,685 L195,690 L190,695 L185,700 L180,705 L175,710 L170,715 L165,720 L160,725 L155,730 L150,735 L145,740 L140,745 L135,750 L130,755 L125,760 L120,765 L115,770 L110,775 L105,780 L100,785 L95,790 L90,795 L85,800 L80,795 L75,790 L70,785 L65,780 L60,775 L55,770 L50,765 L45,760 L40,755 L35,750 L30,745 L25,740 L20,735 L15,730 L10,725 L5,720 L0,715 L5,710 L10,705 L15,700 L20,695 L25,690 L30,685 L35,680 L40,675 L45,670 L50,665 L55,660 L60,655 L65,650 L70,645 L75,640 L80,635 L85,630 L90,625 L95,620 L100,615 L105,610 L110,605 L115,600 L120,595 L125,590 L130,585 L135,580 L140,575 L145,570 L150,565 L155,560 L160,555 L165,550 L170,545 L175,540 L180,535 L185,530 L190,525 L195,520 L200,515 L205,510 L210,505 L215,500 L220,495 L225,490 L230,485 L235,480 L240,475 L245,470 L250,465 L255,460 L260,455 L265,450 L270,445 L275,440 L280,435 L285,430 L290,425 L295,420 L300,415 L305,410 L310,405 L315,400 L320,395 L325,390 L330,385 L335,380 L340,375 L345,370 L350,365 L355,360 L360,355 L365,350 L370,345 L375,340 L380,335 L385,330 L390,325 L395,320 L400,315 L405,310 L410,305 L415,300 L420,295 L425,290 L430,285 L435,280 L440,275 L445,270 L450,265 L455,260 L460,255 L465,250 L470,245 L475,240 L480,235 L485,230 L490,225 L495,220 L500,215 L505,210 L510,205 L515,200 L520,195 L525,190 L530,185 L535,180 L540,175 L545,170 L550,165 L555,160 L560,155 L565,150 L570,145 L575,140 L580,135 L585,130 L590,125 L595,120 L600,115 L605,110 L610,105 L615,100 L620,95 L625,90 L630,85 L635,80 L640,75 L645,70 L650,65 L655,60 L660,55 L665,50 L670,45 L675,40 L680,35 L685,30 L690,25 L695,20 L700,15 L705,10 L710,5 L715,0 L720,5 L725,10 L730,15 L735,20 L740,25 L745,30 L750,35 L755,40 L760,45 L765,50 L770,55 L775,60 L780,65 L785,70 L790,75 L795,80 Z" 
+                    fill="none" stroke="#1a73e8" stroke-width="2" stroke-linejoin="round"/>
+                    <line x1="0" y1="300" x2="800" y2="300" stroke="#1a73e8" stroke-width="1" stroke-dasharray="8,8" opacity="0.3"/>
+                    <text x="300" y="250" font-size="24" font-weight="800" fill="#1a73e8" opacity="0.15" letter-spacing="4">INDONESIA</text>
+                    <text x="100" y="200" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Sumatera</text>
+                    <text x="300" y="340" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Jawa</text>
+                    <text x="550" y="420" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Sulawesi</text>
+                    <text x="650" y="550" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Papua</text>
+                    <text x="400" y="470" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Kalimantan</text>
+                    <text x="350" y="530" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Nusa Tenggara</text>
+                    <text x="200" y="550" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Bali</text>
+                    <text x="650" y="300" font-size="11" fill="#1a73e8" opacity="0.4" font-weight="600">Maluku</text>
+                </svg>
+                <div class="label-peta">📍 MyHome tersedia di seluruh Indonesia</div>
+            </div>
+
+            <div class="sub">Masukkan nama kota Anda</div>
+
+            <div class="form-cek-kota">
+                <input type="text" id="inputKota" placeholder="Contoh: Jakarta, Bandung, Surabaya..." onkeyup="if(event.key==='Enter') cekKota()">
+                <button onclick="cekKota()"><i class="fas fa-search"></i> Cek</button>
+            </div>
+
+            <div style="font-size:0.8rem; color:#5a7a9a; margin-bottom:4px;">Kota populer:</div>
+            <div class="city-quick-list">
+                <span class="city-tag" onclick="pilihKota('Jakarta')">Jakarta</span>
+                <span class="city-tag" onclick="pilihKota('Bandung')">Bandung</span>
+                <span class="city-tag" onclick="pilihKota('Surabaya')">Surabaya</span>
+                <span class="city-tag" onclick="pilihKota('Yogyakarta')">Yogyakarta</span>
+                <span class="city-tag" onclick="pilihKota('Medan')">Medan</span>
+                <span class="city-tag" onclick="pilihKota('Makassar')">Makassar</span>
+                <span class="city-tag" onclick="pilihKota('Bali')">Bali</span>
+                <span class="city-tag" onclick="pilihKota('Palembang')">Palembang</span>
+                <span class="city-tag" onclick="pilihKota('Semarang')">Semarang</span>
+            </div>
+
+            <div class="hasil-cek" id="hasilCek">
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                <h4 id="hasilJudul">✅ Kota Anda Tergolong Jangkauan!</h4>
+                <p id="hasilPesan">MyHome sudah tersedia di kota Anda. Pesan sekarang dan nikmati internet cepat!</p>
+                <div id="hasilTombol">
+                    <a href="pesan.html" class="btn-success">
+                        <i class="fas fa-pen"></i> Pesan Sekarang
+                    </a>
+                </div>
+                <div class="suggestions" id="suggestionsContainer" style="display:none;">
+                    <div class="label">💡 Mungkin maksud Anda:</div>
+                    <div id="suggestionsList"></div>
+                </div>
+            </div>
+
+            <div class="note-jangkauan">
+                <i class="fas fa-check-circle"></i>
+                <strong>100% Seluruh Indonesia</strong> — MyHome sudah tersedia di semua provinsi dan kota di Indonesia.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-size:1.2rem; color:#0d47a1;">
+                    <i class="fas fa-wifi" style="color:#1a73e8;"></i> MyHome
+                </h4>
+                <p>Internet cepat dan stabil untuk rumah Anda. Bayar via QRIS, pasang dalam 1x24 jam.</p>
+            </div>
+            <div>
+                <h4>Paket</h4>
+                <ul>
+                    <li><a href="paket.html">50 Mbps - Rp100.000</a></li>
+                    <li><a href="paket.html">100 Mbps - Rp150.000</a></li>
+                    <li><a href="paket.html">200 Mbps - Rp200.000</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul>
+                    <li><i class="fab fa-whatsapp"></i> 0812-3456-7890</li>
+                    <li><i class="fas fa-envelope"></i> cs@myhome.id</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MyHome. All rights reserved.</span>
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('dropdownMenu').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const dots = document.querySelector('.menu-dots');
+        if (!dots.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+
+    // ===== CEK KOTA =====
+    const daftarKota = dataWilayah.kota.map(k => k.nama);
+
+    function normalizeCity(name) {
+        return name.toLowerCase().trim().replace(/\s+/g, ' ');
+    }
+
+    function pilihKota(kota) {
+        document.getElementById('inputKota').value = kota;
+        cekKota();
+    }
+
+    function cekKota() {
+        const input = document.getElementById('inputKota').value.trim();
+        const hasil = document.getElementById('hasilCek');
+        const judul = document.getElementById('hasilJudul');
+        const pesan = document.getElementById('hasilPesan');
+        const tombol = document.getElementById('hasilTombol');
+        const suggestions = document.getElementById('suggestionsContainer');
+        const suggestionsList = document.getElementById('suggestionsList');
+
+        if (!input) {
+            alert('Silakan masukkan nama kota Anda!');
+            return;
+        }
+
+        const normalizedInput = normalizeCity(input);
+        const found = daftarKota.filter(kota => 
+            normalizeCity(kota) === normalizedInput ||
+            normalizeCity(kota).includes(normalizedInput) ||
+            normalizedInput.includes(normalizeCity(kota))
+        );
+
+        if (found.length > 0) {
+            hasil.className = 'hasil-cek show sukses';
+            const kotaFound = found[0];
+            judul.innerHTML = `✅ <strong>${kotaFound}</strong> termasuk dalam jangkauan MyHome!`;
+            pesan.textContent = '🎉 MyHome sudah tersedia di kota Anda. Pesan sekarang dan nikmati internet cepat!';
+            tombol.innerHTML = `<a href="pesan.html" class="btn-success">
+                <i class="fas fa-pen"></i> Pesan Sekarang
+            </a>`;
+            suggestions.style.display = 'none';
+        } else {
+            hasil.className = 'hasil-cek show error';
+            const similar = daftarKota.filter(kota => {
+                const normKota = normalizeCity(kota);
+                return normKota.includes(normalizedInput) || normalizedInput.includes(normKota);
+            }).slice(0, 5);
+
+            if (similar.length > 0) {
+                judul.innerHTML = `❌ <strong>"${input}"</strong> tidak ditemukan`;
+                pesan.textContent = 'Coba periksa penulisan atau pilih salah satu kota di bawah ini:';
+                tombol.innerHTML = '';
+                suggestions.style.display = 'block';
+                suggestionsList.innerHTML = similar.map(kota => 
+                    `<span class="city-tag" onclick="pilihKota('${kota}')">${kota}</span>`
+                ).join('');
+            } else {
+                judul.innerHTML = `❌ <strong>"${input}"</strong> tidak ditemukan`;
+                pesan.textContent = 'Maaf, kota yang Anda masukkan tidak terdaftar. Silakan coba dengan kota lain.';
+                tombol.innerHTML = '';
+                suggestions.style.display = 'none';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

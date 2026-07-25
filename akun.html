@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MyHome - Cek Status</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-title {
+            text-align: center;
+            padding: 120px 0 20px;
+        }
+        .page-title h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0d2b5a;
+        }
+        .page-title p {
+            color: #5a7a9a;
+            font-size: 1.1rem;
+        }
+        .akun-page {
+            padding-bottom: 60px;
+        }
+        .akun-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .akun-container .icon-big {
+            text-align: center;
+            font-size: 3rem;
+            color: #1a73e8;
+            margin-bottom: 12px;
+        }
+        .akun-container h3 {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #0d2b5a;
+            margin-bottom: 4px;
+        }
+        .akun-container .sub {
+            text-align: center;
+            color: #5a7a9a;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .cek-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .cek-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e3edfc;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #f8fbff;
+            color: #0d2b5a;
+            font-family: monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .cek-form input:focus {
+            outline: none;
+            border-color: #1a73e8;
+            background: #ffffff;
+        }
+        .cek-form button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .cek-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+
+        .hasil-container {
+            display: none;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        .hasil-container.show {
+            display: block;
+        }
+        .hasil-container.found {
+            background: #f8fbff;
+            border: 2px solid #1a73e8;
+        }
+        .hasil-container.notfound {
+            background: #ffebee;
+            border: 2px solid #e53935;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hasil-container .status-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .hasil-container .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .hasil-container .status-badge.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .hasil-container .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(26, 115, 232, 0.06);
+            font-size: 0.95rem;
+        }
+        .hasil-container .info-row .label {
+            color: #5a7a9a;
+        }
+        .hasil-container .info-row .value {
+            font-weight: 600;
+            color: #0d2b5a;
+            text-align: right;
+        }
+
+        .hasil-container .btn-aksi {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pesanan-list {
+            margin-top: 24px;
+        }
+        .pesanan-item {
+            background: #f8fbff;
+            border: 1px solid rgba(26, 115, 232, 0.06);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pesanan-item:hover {
+            border-color: #1a73e8;
+            background: #f0f6ff;
+        }
+        .pesanan-item .kode {
+            font-weight: 700;
+            color: #0d47a1;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+        .pesanan-item .status {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+        .pesanan-item .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .pesanan-item .status.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .pesanan-item .tanggal {
+            font-size: 0.85rem;
+            color: #7a9abb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7a9abb;
+        }
+        .empty-state i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+            color: #d4e4fc;
+        }
+
+        @media (max-width: 600px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            .akun-container {
+                padding: 24px;
+            }
+            .cek-form {
+                flex-direction: column;
+            }
+            .cek-form button {
+                width: 100%;
+            }
+            .hasil-container .info-row {
+                flex-direction: column;
+                gap: 2px;
+            }
+            .hasil-container .info-row .value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-flex">
+        <div class="logo">
+            <i class="fas fa-wifi icon-wifi"></i>
+            My<span>Home</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="paket.html">Paket</a></li>
+            <li><a href="jangkauan.html">Jangkauan</a></li>
+            <li><a href="akun.html" class="active">Akun</a></li>
+        </ul>
+        <div class="nav-right">
+            <div style="position:relative;">
+                <button class="menu-dots" onclick="toggleMenu()" aria-label="Menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    <a href="paket.html"><i class="fas fa-tags"></i> Paket</a>
+                    <a href="jangkauan.html"><i class="fas fa-map-pin"></i> Cek Jangkauan</a>
+                    <a href="akun.html"><i class="fas fa-user-circle"></i> Akun Saya</a>
+                    <div class="menu-divider"></div>
+                    <a href="login.html" style="color:#1a73e8; font-weight:600;">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="pesan.html" style="color:#0d47a1; font-weight:600;">
+                        <i class="fas fa-qrcode"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== CEK STATUS ===== -->
+<section class="page-title">
+    <div class="container">
+        <span class="section-label">Akun Saya</span>
+        <h1>Cek Status <span class="gradient">Pesanan</span></h1>
+        <p>Masukkan kode pelanggan untuk melihat status pemasangan WiFi Anda.</p>
+    </div>
+</section>
+
+<section class="akun-page">
+    <div class="container">
+        <div class="akun-container">
+            <div class="icon-big">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h3>Cek Status Pesanan</h3>
+            <p class="sub">Masukkan kode pelanggan yang Anda dapatkan saat pemesanan</p>
+
+            <div class="cek-form">
+                <input type="text" id="inputKode" placeholder="Contoh: MYH-20260725-001" maxlength="20" style="text-transform:uppercase;">
+                <button onclick="cekStatus()"><i class="fas fa-search"></i> Cek</button>
+            </div>
+
+            <div class="hasil-container" id="hasilContainer">
+                <div id="hasilContent"></div>
+            </div>
+
+            <div class="pesanan-list" id="pesananList">
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada pesanan</p>
+                    <p style="font-size:0.85rem;">Silakan pesan paket WiFi terlebih dahulu</p>
+                    <a href="paket.html" class="btn-qris" style="margin-top:12px; padding:10px 24px; font-size:0.85rem;">
+                        <i class="fas fa-qrcode"></i> Lihat Paket
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="font-size:1.2rem; color:#0d47a1;">
+                    <i class="fas fa-wifi" style="color:#1a73e8;"></i> MyHome
+                </h4>
+                <p>Internet cepat dan stabil untuk rumah Anda. Bayar via QRIS, pasang dalam 1x24 jam.</p>
+            </div>
+            <div>
+                <h4>Paket</h4>
+                <ul>
+                    <li><a href="paket.html">50 Mbps - Rp100.000</a></li>
+                    <li><a href="paket.html">100 Mbps - Rp150.000</a></li>
+                    <li><a href="paket.html">200 Mbps - Rp200.000</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul>
+                    <li><i class="fab fa-whatsapp"></i> 0812-3456-7890</li>
+                    <li><i class="fas fa-envelope"></i> cs@myhome.id</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MyHome. All rights reserved.</span>
+            <div class="socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('dropdownMenu').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const dots = document.querySelector('.menu-dots');
+        if (!dots.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+
+    // ===== LOAD DATA =====
+    function loadPesanan() {
+        const pesanan = JSON.parse(localStorage.getItem('myhome_pesanan') || '[]');
+        const list = document.getElementById('pesananList');
+
+        if (pesanan.length === 0) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada pesanan</p>
+                    <p style="font-size:0.85rem;">Silakan pesan paket WiFi terlebih dahulu</p>
+                    <a href="paket.html" class="btn-qris" style="margin-top:12px; padding:10px 24px; font-size:0.85rem;">
+                        <i class="fas fa-qrcode"></i> Lihat Paket
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        list.innerHTML = pesanan.map(p => `
+            <div class="pesanan-item" onclick="cariKode('${p.kode}')">
+                <div>
+                    <div class="kode">🔑 ${p.kode}</div>
+                    <div class="tanggal">${p.tanggalPesan ? new Date(p.tanggalPesan).toLocaleDateString('id-ID') : '-'}</div>
+                </div>
+                <div>
+                    <span class="status ${p.status === 'confirmed' ? 'confirmed' : 'pending'}">
+                        ${p.status === 'confirmed' ? '✅ Dikonfirmasi' : '⏳ Menunggu'}
+                    </span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ===== CEK STATUS =====
+    function cekStatus() {
+        const kode = document.getElementById('inputKode').value.trim().toUpperCase();
+        const container = document.getElementById('hasilContainer');
+        const content = document.getElementById('hasilContent');
+
+        if (!kode) {
+            alert('Silakan masukkan kode pelanggan!');
+            return;
+        }
+
+        const pesanan = JSON.parse(localStorage.getItem('myhome_pesanan') || '[]');
+        const found = pesanan.find(p => p.kode === kode);
+
+        if (found) {
+            container.className = 'hasil-container show found';
+            const statusText = found.status === 'confirmed' ? '✅ Sudah Dikonfirmasi' : '⏳ Menunggu Konfirmasi';
+            const statusClass = found.status === 'confirmed' ? 'confirmed' : 'pending';
+
+            content.innerHTML = `
+                <div class="status-badge ${statusClass}">${statusText}</div>
+                <div class="info-row">
+                    <span class="label">🔑 Kode Pelanggan</span>
+                    <span class="value">${found.kode}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">📦 Paket</span>
+                    <span class="value">${found.paket}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">💰 Harga</span>
+                    <span class="value">Rp ${found.harga.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">👤 Nama</span>
+                    <span class="value">${found.nama}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">📱 HP/WA</span>
+                    <span class="value">${found.hp}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">📍 Alamat</span>
+                    <span class="value">${found.alamat}, ${found.kecamatan}, ${found.kota}, ${found.provinsi}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">📅 Tanggal Pasang</span>
+                    <span class="value">${found.tanggal}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">🕐 Jam Pasang</span>
+                    <span class="value">${found.jam}</span>
+                </div>
+                ${found.bukti ? `<div class="info-row">
+                    <span class="label">📎 Bukti Transfer</span>
+                    <span class="value">${found.bukti}</span>
+                </div>` : ''}
+                <div class="info-row">
+                    <span class="label">📅 Tanggal Pesan</span>
+                    <span class="value">${found.tanggalPesan ? new Date(found.tanggalPesan).toLocaleDateString('id-ID') : '-'}</span>
+                </div>
+                <div class="btn-aksi">
+                    ${found.status === 'pending' ? `
+                        <a href="pesan.html" class="btn-qris" style="padding:10px 24px; font-size:0.85rem;">
+                            <i class="fas fa-upload"></i> Upload Ulang
+                        </a>
+                    ` : `
+                        <a href="pesan.html" class="btn-outline" style="padding:10px 24px; font-size:0.85rem;">
+                            <i class="fas fa-plus"></i> Pesan Lagi
+                        </a>
+                    `}
+                    <button class="btn-outline" onclick="document.getElementById('inputKode').value=''; document.getElementById('hasilContainer').className='hasil-container';" style="padding:10px 24px; font-size:0.85rem;">
+                        <i class="fas fa-times"></i> Tutup
+                    </button>
+                </div>
+            `;
+        } else {
+            container.className = 'hasil-container show notfound';
+            content.innerHTML = `
+                <div style="text-align:center; padding:16px 0;">
+                    <i class="fas fa-exclamation-circle" style="font-size:3rem; color:#e53935; display:block; margin-bottom:12px;"></i>
+                    <h4 style="color:#0d2b5a;">❌ Kode Tidak Ditemukan</h4>
+                    <p style="color:#5a7a9a;">Kode pelanggan <strong>${kode}</strong> tidak ditemukan.</p>
+                    <p style="color:#5a7a9a; font-size:0.9rem;">Pastikan kode yang Anda masukkan benar.</p>
+                    <button class="btn-primary" onclick="document.getElementById('inputKode').value=''; document.getElementById('hasilContainer').className='hasil-container';" style="margin-top:12px; padding:10px 24px; font-size:0.85rem;">
+                        <i class="fas fa-undo"></i> Coba Lagi
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    function cariKode(kode) {
+        document.getElementById('inputKode').value = kode;
+        cekStatus();
+        document.getElementById('inputKode').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ===== CEK URL PARAM =====
+    const urlParams = new URLSearchParams(window.location.search);
+    const kodeParam = urlParams.get('kode');
+    if (kodeParam) {
+        document.getElementById('inputKode').value = kodeParam;
+        setTimeout(cekStatus, 500);
+    }
+
+    // ===== LOAD =====
+    loadPesanan();
+
+    // Enter key
+    document.getElementById('inputKode').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') cekStatus();
+    });
+</script>
+
+</body>
+</html>
